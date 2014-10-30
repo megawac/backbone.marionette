@@ -14,10 +14,12 @@ describe('Behaviors', function() {
 
   describe('behavior parsing with a functional behavior lookup', function() {
     beforeEach(function() {
-      this.behaviors = {
+      var behaviors = {
         foo: this.sinon.spy(Marionette, "Behavior")
       };
-      Marionette.Behaviors.behaviorsLookup = _.constant(this.behaviors);
+      Marionette.Behaviors.behaviorsLookup = function() {
+        return behaviors;
+      };
     });
 
     describe('when one behavior', function() {
