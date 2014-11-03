@@ -2,9 +2,9 @@
 
 # Marionette.View
 
-Marionette has a base `Marionette.View` class that other views extend from.
-This base view provides some common and core functionality for
-other views to take advantage of.
+Marionette has a base `Marionette.View` class which extends `Backbone.View`
+and other `Marionette` view classes extend from. This base view provides some
+common and core functionality for other views to take advantage of.
 
 **Note:** The `Marionette.View` class is not intended to be
 used directly. It exists as a base view for other view classes
