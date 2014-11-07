@@ -16,9 +16,8 @@ matrix:
 before_install:
   - npm config set ca ""
 install:
-  - npm install -g bower grunt-cli
+  - npm install -g grunt-cli
   - npm install
-  - npm run bower
   # Which matrix settings -- otherwise default
   - "[ $BACKBONE ] && npm install backbone@$BACKBONE"
   - "[ $UNDERSCORE ] && npm install underscore@$UNDERSCORE"
