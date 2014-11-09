@@ -1,27 +1,25 @@
 language: node_js
-os:
-  - osx
 node_js:
   - "0.10"
 matrix:
   include:
     - node_js: "0.10"
-      env: UNDERSCORE=1.4.4 BACKBONE=1.0
+      env: UNDERSCORE=1.4.4 BACKBONE=1.0 COVERAGE=false
     - node_js: "0.10"
-      env: UNDERSCORE=1.5 BACKBONE=1.0
+      env: UNDERSCORE=1.5 BACKBONE=1.0 COVERAGE=false
     - node_js: "0.10"
-      env: UNDERSCORE=1.6 BACKBONE=1.0
+      env: UNDERSCORE=1.6 BACKBONE=1.0 COVERAGE=false
     - node_js: "0.10"
-      env: UNDERSCORE=1.4.4 BACKBONE=1.1.0
+      env: UNDERSCORE=1.4.4 BACKBONE=1.1.0 COVERAGE=false
     - node_js: "0.10"
-      env: UNDERSCORE=1.5 BACKBONE=1.1
+      env: UNDERSCORE=1.5 BACKBONE=1.1 COVERAGE=false
 before_install:
   - npm config set ca ""
 install:
   - npm install -g grunt-cli
   - npm install
   # Which matrix settings -- otherwise default
-  - "[ $BACKBONE ] && npm install backbone@$BACKBONE"
-  - "[ $UNDERSCORE ] && npm install underscore@$UNDERSCORE"
+  - "[ $BACKBONE >= 0 ] && npm install backbone@$BACKBONE"
+  - "[ $UNDERSCORE >= 0 ] && npm install underscore@$UNDERSCORE"
 after_success:
-  - npm run-script coverage
+  - "[$COVERAGE != false] npm run-script coverage"
