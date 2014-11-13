@@ -13,13 +13,14 @@ matrix:
       env: UNDERSCORE=1.4.4 BACKBONE=1.1.0 COVERAGE=false
     - node_js: "0.10"
       env: UNDERSCORE=1.5 BACKBONE=1.1 COVERAGE=false
+env: BACKBONE=false UNDERSCORE=false
 before_install:
   - npm config set ca ""
 install:
   - npm install -g grunt-cli
   - npm install
   # Which matrix settings -- otherwise default
-  - "[ $BACKBONE >= 0 ] && npm install backbone@$BACKBONE"
-  - "[ $UNDERSCORE >= 0 ] && npm install underscore@$UNDERSCORE"
+  - "[ $BACKBONE != false ] && npm install backbone@$BACKBONE"
+  - "[ $UNDERSCORE != false ] && npm install underscore@$UNDERSCORE"
 after_success:
   - "[$COVERAGE != false] npm run-script coverage"
