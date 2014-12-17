@@ -178,10 +178,11 @@ Marionette.Region = Marionette.Object.extend({
     }
   },
 
-  // Override this method to change how the region finds the
-  // DOM element that it manages. Return a jQuery selector object.
+  // Override this method to change how the region finds the DOM
+  // element that it manages. Return a jQuery selector object scoped
+  // to a provided parent el or the document if none exists.
   getEl: function(el) {
-    return Backbone.$(el, Marionette.getValue(this.options.parentEl));
+    return Backbone.$(el, Marionette.getValue(this.options.parentEl, this));
   },
 
   // Override this method to change how the new view is
@@ -314,17 +315,7 @@ Marionette.Region = Marionette.Object.extend({
       options.el = regionConfig.selector;
     }
 
-    var region = new RegionClass(options);
-
-    // override the `getEl` function if we have a parentEl
-    // this must be overridden to ensure the selector is found
-    // on the first use of the region. if we try to assign the
-    // region's `el` to `parentEl.find(selector)` in the object
-    // literal to build the region, the element will not be
-    // guaranteed to be in the DOM already, and will cause problems
-    region.options = _.extend(region.options || {}, _.pick(regionConfig, 'parentEl'));
-
-    return region;
+    return new RegionClass(options);
   },
 
   // Build the region directly from a given `RegionClass`
