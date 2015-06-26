@@ -117,27 +117,22 @@ Marionette.AbstractView = Backbone.View.extend({
   delegateEntityEvents: function() {
     this.undelegateEntityEvents();
 
-    this.bindEntityEvents(this.model, this.getOption('modelEvents'));
-    this.bindEntityEvents(this.collection, this.getOption('collectionEvents'));
-
-    _.each(this._behaviors, function(behavior) {
-      behavior.bindEntityEvents(this.model, behavior.getOption('modelEvents'));
-      behavior.bindEntityEvents(this.collection, behavior.getOption('collectionEvents'));
-    }, this);
-
-    return this;
+    return this._preformEntityDelegations('bindEntityEvents');
   },
 
   // Handle unbinding `modelEvents`, and `collectionEvents` configuration
   undelegateEntityEvents: function() {
-    this.unbindEntityEvents(this.model, this.getOption('modelEvents'));
-    this.unbindEntityEvents(this.collection, this.getOption('collectionEvents'));
+    return this._preformEntityDelegations('unbindEntityEvents');
+  },
+
+  _preformEntityDelegations: function(delegator) {
+    this[delegator](this.model, this.getOption('modelEvents'));
+    this[delegator](this.collection, this.getOption('collectionEvents'));
 
     _.each(this._behaviors, function(behavior) {
-      behavior.unbindEntityEvents(this.model, behavior.getOption('modelEvents'));
-      behavior.unbindEntityEvents(this.collection, behavior.getOption('collectionEvents'));
+      behavior[delegator](this.model, behavior.getOption('modelEvents'));
+      behavior[delegator](this.collection, behavior.getOption('collectionEvents'));
     }, this);
-
     return this;
   },
 
